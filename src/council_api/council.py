@@ -1,6 +1,6 @@
 """3-stage LLM Council orchestration.
 
-Adapted from karpathy/llm-council:
+Adapted from karpathy/council-api:
   Stage 1 -- Individual assessments (parallel, structured JSON or text)
   Stage 2 -- Peer review (parallel, free-form text with FINAL RANKING)
   Stage 3 -- Chairman synthesis (single model, structured JSON or text)
@@ -19,10 +19,10 @@ from collections import defaultdict
 from pathlib import Path
 from time import perf_counter
 
-from llm_council.checkpoint import CouncilCheckpointer
-from llm_council.client import LLMClient
-from llm_council.config import AVAILABLE_MODELS, model_display_name
-from llm_council.models import (
+from council_api.checkpoint import CouncilCheckpointer
+from council_api.client import LLMClient
+from council_api.config import AVAILABLE_MODELS, model_display_name
+from council_api.models import (
     CouncilAssessment,
     CouncilMeta,
     CouncilPeerReview,

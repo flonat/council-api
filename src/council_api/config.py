@@ -45,11 +45,11 @@ _BUILTIN_DEFAULT_MODELS: list[str] = [
 _BUILTIN_DEFAULT_CHAIRMAN: str = "anthropic/claude-sonnet-4.5"
 
 # User config file
-USER_CONFIG_PATH = Path.home() / ".config" / "llm-council" / "config.json"
+USER_CONFIG_PATH = Path.home() / ".config" / "council-api" / "config.json"
 
 
 def _load_user_config() -> dict | None:
-    """Load user config from ~/.config/llm-council/config.json."""
+    """Load user config from ~/.config/council-api/config.json."""
     if not USER_CONFIG_PATH.exists():
         return None
     try:

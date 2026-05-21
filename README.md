@@ -49,7 +49,7 @@ Stage 3: Chairman Synthesis (single model)
 ## Installation
 
 ```bash
-pip install "llm-council @ git+https://github.com/flonat/llm-council.git"
+pip install "council-api @ git+https://github.com/flonat/council-api.git"
 ```
 
 Requires Python 3.11+.
@@ -58,7 +58,7 @@ Requires Python 3.11+.
 
 ```python
 import asyncio
-from llm_council import LLMClient, CouncilService
+from council_api import LLMClient, CouncilService
 
 async def main():
     client = LLMClient(
@@ -192,7 +192,7 @@ result = await council.run_council(
 ### Data Models
 
 ```python
-from llm_council import (
+from council_api import (
     CouncilResult,
     CouncilAssessment,
     CouncilPeerReview,
@@ -268,7 +268,7 @@ class CouncilMeta(BaseModel):
 The `config` module provides model registry management, user defaults, and pricing.
 
 ```python
-from llm_council.config import (
+from council_api.config import (
     AVAILABLE_MODELS,          # Default model list (17 models)
     ALLOWED_PROVIDERS,         # {"anthropic", "openai", "google"}
     COUNCIL_DEFAULT_MODELS,    # Default 3 council members (resolves user config)
@@ -276,7 +276,7 @@ from llm_council.config import (
     model_display_name,        # model_id -> human name
     get_council_defaults,      # Get council models (user config > built-in)
     get_chairman_default,      # Get chairman model (user config > built-in)
-    set_council_defaults,      # Persist council defaults to ~/.config/llm-council/
+    set_council_defaults,      # Persist council defaults to ~/.config/council-api/
     reset_council_defaults,    # Revert to built-in defaults
     fetch_model_pricing,       # Enrich models with live OpenRouter pricing
     fetch_all_provider_models, # Discover all models from allowed providers
@@ -299,7 +299,7 @@ set_council_defaults(
     models=["anthropic/claude-sonnet-4.6", "openai/gpt-5", "google/gemini-3-pro-preview"],
     chairman="anthropic/claude-opus-4.5",
 )
-# Saved to ~/.config/llm-council/config.json
+# Saved to ~/.config/council-api/config.json
 
 # Revert to built-in defaults
 reset_council_defaults()
@@ -401,7 +401,7 @@ if result.meta.stage3_fallback:
 ### Run a Council
 
 ```bash
-llm-council \
+council-api \
     --system-prompt "You are a reviewer. Return JSON: {score: int, summary: str}" \
     --user-message "Review: ..." \
     --models "anthropic/claude-sonnet-4.5,openai/gpt-5,google/gemini-2.5-pro" \
@@ -412,7 +412,7 @@ llm-council \
 Or from files:
 
 ```bash
-llm-council \
+council-api \
     --system-prompt-file system.txt \
     --user-message-file user.txt
 ```
@@ -425,22 +425,22 @@ When `--models` and `--chairman` are omitted, the CLI uses your configured defau
 
 ```bash
 # List available models and current defaults
-llm-council models
+council-api models
 
 # Include live OpenRouter pricing
-llm-council models --pricing
+council-api models --pricing
 
 # Set default council models
-llm-council models --set-defaults "anthropic/claude-sonnet-4.6,openai/gpt-5,google/gemini-3-pro-preview"
+council-api models --set-defaults "anthropic/claude-sonnet-4.6,openai/gpt-5,google/gemini-3-pro-preview"
 
 # Set default chairman
-llm-council models --set-chairman "anthropic/claude-opus-4.5"
+council-api models --set-chairman "anthropic/claude-opus-4.5"
 
 # Reset to built-in defaults
-llm-council models --reset
+council-api models --reset
 ```
 
-Defaults are persisted to `~/.config/llm-council/config.json` and used automatically when `--models`/`--chairman` are omitted.
+Defaults are persisted to `~/.config/council-api/config.json` and used automatically when `--models`/`--chairman` are omitted.
 
 ## Dependencies
 
@@ -453,7 +453,7 @@ Defaults are persisted to `~/.config/llm-council/config.json` and used automatic
 ## Package Structure
 
 ```
-llm_council/
+council_api/
 ├── __init__.py      # Public API exports
 ├── __main__.py      # CLI entry point
 ├── client.py        # LLMClient + error classes

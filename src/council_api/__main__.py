@@ -2,7 +2,7 @@
 
 Usage:
     # Run a council
-    llm-council \\
+    council-api \\
         --system-prompt "You are a paper reviewer..." \\
         --user-message "Review this paper: ..." \\
         --models "anthropic/claude-sonnet-4.5,openai/gpt-4.1,google/gemini-2.5-pro" \\
@@ -10,16 +10,16 @@ Usage:
         --output result.json
 
     # Or read prompts from files:
-    llm-council \\
+    council-api \\
         --system-prompt-file system.txt \\
         --user-message-file user.txt
 
     # Manage models
-    llm-council models                          # show available + defaults
-    llm-council models --pricing                # include OpenRouter pricing
-    llm-council models --set-defaults "m1,m2"   # set default council models
-    llm-council models --set-chairman "m1"      # set default chairman
-    llm-council models --reset                  # revert to built-in defaults
+    council-api models                          # show available + defaults
+    council-api models --pricing                # include OpenRouter pricing
+    council-api models --set-defaults "m1,m2"   # set default council models
+    council-api models --set-chairman "m1"      # set default chairman
+    council-api models --reset                  # revert to built-in defaults
 
 Environment:
     OPENROUTER_API_KEY  Required for council runs and pricing lookups.
@@ -33,8 +33,8 @@ import json
 import os
 import sys
 
-from llm_council.client import LLMClient
-from llm_council.config import (
+from council_api.client import LLMClient
+from council_api.config import (
     AVAILABLE_MODELS,
     USER_CONFIG_PATH,
     _BUILTIN_DEFAULT_CHAIRMAN,
@@ -80,7 +80,7 @@ async def _models_command(args: argparse.Namespace) -> None:
     is_custom = USER_CONFIG_PATH.exists()
 
     if args.pricing:
-        from llm_council.config import fetch_model_pricing
+        from council_api.config import fetch_model_pricing
 
         models = await fetch_model_pricing()
     else:
@@ -147,7 +147,7 @@ async def _run_command(args: argparse.Namespace) -> None:
     models = [m.strip() for m in args.models.split(",")]
     chairman = args.chairman
 
-    from llm_council.council import CouncilService
+    from council_api.council import CouncilService
 
     llm = LLMClient(api_key=api_key, max_tokens=args.max_tokens)
     council = CouncilService(llm)

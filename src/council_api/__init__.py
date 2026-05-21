@@ -1,14 +1,14 @@
-"""llm-council: Multi-model LLM council across OpenRouter + native providers."""
+"""council-api: Multi-model LLM council across OpenRouter + native providers."""
 
-from llm_council.checkpoint import CouncilCheckpointer
-from llm_council.client import (
+from council_api.checkpoint import CouncilCheckpointer
+from council_api.client import (
     PROVIDERS,
     LLMClient,
     LLMResponseFormatError,
     LLMServiceError,
 )
-from llm_council.council import CouncilService
-from llm_council.models import (
+from council_api.council import CouncilService
+from council_api.models import (
     CouncilAssessment,
     CouncilMeta,
     CouncilPeerReview,
